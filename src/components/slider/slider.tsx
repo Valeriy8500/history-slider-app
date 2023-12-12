@@ -1,21 +1,21 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 import './slider.scss';
+import { centerX, centerY, numPoints, radius, slideInfo } from '../../constans/constans';
 
 export const Slider = () => {
-  const numPoints = 6; // Количество точек
-  const radius = 265; // Радиус круга
-  const centerX = 262; // Центр круга (X-координата)
-  const centerY = 262; // Центр круга (Y-координата)
 
-  const points = Array.from({ length: numPoints }).map((_, index) => {
-    const angle = (index / numPoints) * 2 * Math.PI; // Угол для каждой точки
-    const x = centerX + radius * Math.cos(angle); // Вычисление X-координаты
-    const y = centerY + radius * Math.sin(angle); // Вычисление Y-координаты
+  const points = slideInfo.map((item, index) => {
+    const angle = (index / numPoints) * 2 * Math.PI;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
 
     return (
       <div
-        key={index}
+        key={item.id}
         className="point"
         style={{ left: `${x}px`, top: `${y}px` }}
+        id={String(item.id)}
       ></div>
     );
   });
@@ -29,7 +29,6 @@ export const Slider = () => {
       </div>
 
       <div className='events-container'>
-        <div>13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды</div>
       </div>
     </div>
   );
