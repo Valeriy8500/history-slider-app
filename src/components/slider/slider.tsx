@@ -5,13 +5,14 @@ import 'swiper/scss/navigation';
 
 import { centerX, centerY, numPoints, radius, slideInfo } from '../../constans/constans';
 import { AiOutlineRightCircle, AiOutlineLeftCircle } from "react-icons/ai";
-import './slider.scss';
 import { ReactElement, useEffect, useState } from 'react';
+import './slider.scss';
 
 export const Slider = (): ReactElement => {
   const [slideState, setSlideState] = useState(slideInfo[0]);
   const [currStartDate, setCurrStartDate] = useState(Number(slideState.startDate));
   const [currEndDate, setCurrEndDate] = useState(Number(slideState.endDate));
+  const [sliderAnimation, setSliderAnimation] = useState(true);
 
   useEffect(() => {
     if (currStartDate < Number(slideState.startDate)) {
@@ -29,29 +30,45 @@ export const Slider = (): ReactElement => {
     }
   }, [currEndDate, slideState]);
 
+  const onSliderAnimation = () => {
+    setSliderAnimation(prev => !prev);
+    setTimeout(() => {
+      setSliderAnimation(prev => !prev);
+    }, 750);
+  };
+
   const onPointClick = (id: number) => {
     const newSlide = slideInfo.filter(i => i.id === id)[0];
-    setSlideState(newSlide);
+    onSliderAnimation();
+    setTimeout(() => {
+      setSlideState(newSlide);
+    }, 500);
   };
 
   const onClickLeftBtn = () => {
-    setSlideState((prev) => {
-      if (prev.id === 1) {
-        return slideInfo.filter((i) => i.id === 6)[0];
-      } else {
-        return slideInfo.filter((i) => i.id === prev.id - 1)[0];
-      }
-    });
-  };
+    onSliderAnimation();
+    setTimeout(() => {
+      setSlideState((prev) => {
+        if (prev.id === 1) {
+          return slideInfo.filter((i) => i.id === 6)[0];
+        } else {
+          return slideInfo.filter((i) => i.id === prev.id - 1)[0];
+        }
+      });
+    }, 500);
+  }
 
   const onClickRightBtn = () => {
-    setSlideState((prev) => {
-      if (prev.id === 6) {
-        return slideInfo.filter((i) => i.id === 1)[0];
-      } else {
-        return slideInfo.filter((i) => i.id === prev.id + 1)[0];
-      }
-    });
+    onSliderAnimation();
+    setTimeout(() => {
+      setSlideState((prev) => {
+        if (prev.id === 6) {
+          return slideInfo.filter((i) => i.id === 1)[0];
+        } else {
+          return slideInfo.filter((i) => i.id === prev.id + 1)[0];
+        }
+      });
+    }, 500);
   };
 
   const points = slideInfo.map((item, index) => {
@@ -98,13 +115,12 @@ export const Slider = (): ReactElement => {
         </div>
       </div>
 
-      <div className='slider-container'>
+      <div className={sliderAnimation ? 'slider-container fade-in' : 'slider-container fade-out'}>
         <Swiper
           modules={[Navigation]}
           spaceBetween={50}
           slidesPerView={3}
           navigation
-          onSlideChange={() => console.log('slide change')}
           className='slider'
         >
           {slideState.events.map((item, idx) => {
