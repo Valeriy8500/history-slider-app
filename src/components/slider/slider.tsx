@@ -34,6 +34,26 @@ export const Slider = (): ReactElement => {
     setSlideState(newSlide);
   };
 
+  const onClickLeftBtn = () => {
+    setSlideState((prev) => {
+      if (prev.id === 1) {
+        return slideInfo.filter((i) => i.id === 6)[0];
+      } else {
+        return slideInfo.filter((i) => i.id === prev.id - 1)[0];
+      }
+    });
+  };
+
+  const onClickRightBtn = () => {
+    setSlideState((prev) => {
+      if (prev.id === 6) {
+        return slideInfo.filter((i) => i.id === 1)[0];
+      } else {
+        return slideInfo.filter((i) => i.id === prev.id + 1)[0];
+      }
+    });
+  };
+
   const points = slideInfo.map((item, index) => {
     const angle = (index / numPoints) * 2 * Math.PI;
     const x = centerX + radius * Math.cos(angle);
@@ -67,12 +87,12 @@ export const Slider = (): ReactElement => {
       </div>
 
       <div className='switches-container'>
-        <div className='slide-number'>06/06</div>
+        <div className='slide-number'>{`0${slideState.id}/06`}</div>
         <div className='buttons'>
-          <button className='btn-left'>
+          <button className='btn-left' onClick={() => onClickLeftBtn()}>
             <AiOutlineLeftCircle className='btn-icon' />
           </button>
-          <button className='btn-right'>
+          <button className='btn-right' onClick={() => onClickRightBtn()}>
             <AiOutlineRightCircle className='btn-icon' />
           </button>
         </div>

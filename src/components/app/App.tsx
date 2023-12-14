@@ -3,11 +3,7 @@ import 'swiper/css';
 import './App.scss';
 
 function App() {
-  return (
-    <>
-      <HistoryBlock />
-    </>
-  );
+  return (<HistoryBlock />);
 }
 
 export default App;
