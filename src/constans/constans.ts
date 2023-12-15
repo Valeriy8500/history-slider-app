@@ -4,6 +4,7 @@ export const slideInfo = [
     name: 'Литература',
     startDate: '1992',
     endDate: '1997',
+    numForCircle: 5,
     events: [
       {
         date: '1992',
@@ -36,6 +37,7 @@ export const slideInfo = [
     name: 'Наука',
     startDate: '2015',
     endDate: '2022',
+    numForCircle: 6,
     events: [
       {
         date: '2015',
@@ -56,6 +58,7 @@ export const slideInfo = [
     name: 'Кино',
     startDate: '1987',
     endDate: '1991',
+    numForCircle: 7,
     events: [
       {
         date: '1987',
@@ -84,6 +87,7 @@ export const slideInfo = [
     name: 'Литература',
     startDate: '1992',
     endDate: '1997',
+    numForCircle: 8,
     events: [
       {
         date: '1992',
@@ -116,6 +120,7 @@ export const slideInfo = [
     name: 'Наука',
     startDate: '2015',
     endDate: '2022',
+    numForCircle: 9,
     events: [
       {
         date: '2015',
@@ -136,6 +141,7 @@ export const slideInfo = [
     name: 'Кино',
     startDate: '1987',
     endDate: '1991',
+    numForCircle: 10,
     events: [
       {
         date: '1987',

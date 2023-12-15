@@ -9,10 +9,26 @@ import { ReactElement, useEffect, useState } from 'react';
 import './slider.scss';
 
 export const Slider = (): ReactElement => {
+  const [slideInfoArr, setSlideInfoArr] = useState(slideInfo);
   const [slideState, setSlideState] = useState(slideInfo[0]);
   const [currStartDate, setCurrStartDate] = useState(Number(slideState.startDate));
   const [currEndDate, setCurrEndDate] = useState(Number(slideState.endDate));
   const [sliderAnimation, setSliderAnimation] = useState(true);
+  const [pointsPosition, setPointsPosition] = useState<any>([]);
+
+  useEffect(() => {
+    let arr: Object[] = [];
+
+    slideInfo.forEach((item) => {
+      const angle = (item.numForCircle / numPoints) * 2 * Math.PI;
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+
+      arr = [...arr, { x, y, id: item.id }];
+    });
+
+    setPointsPosition(arr);
+  }, []);
 
   useEffect(() => {
     if (currStartDate < Number(slideState.startDate)) {
@@ -45,6 +61,45 @@ export const Slider = (): ReactElement => {
     }, 500);
   };
 
+  const onClickRightBtn = () => {
+    let arr: Object[] = [];
+
+    const updatedSlideInfo = slideInfoArr.map((item, index) => {
+      if (index === 0) {
+        return { ...item, numForCircle: slideInfo[slideInfo.length - 1].numForCircle };
+      } else {
+        return { ...item, numForCircle: slideInfo[index - 1].numForCircle };
+      }
+    });
+
+    const firstEl = updatedSlideInfo[0];
+    updatedSlideInfo.push(firstEl);
+    updatedSlideInfo.shift();
+
+    setSlideInfoArr(updatedSlideInfo);
+
+    updatedSlideInfo.forEach((item) => {
+      const angle = (item.numForCircle / numPoints) * 2 * Math.PI;
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+
+      arr = [...arr, { x, y, id: item.id }];
+    });
+
+    setPointsPosition(arr);
+
+    onSliderAnimation();
+    setTimeout(() => {
+      setSlideState((prev) => {
+        if (prev.id === 6) {
+          return slideInfo.filter((i) => i.id === 1)[0];
+        } else {
+          return slideInfo.filter((i) => i.id === prev.id + 1)[0];
+        }
+      });
+    }, 500);
+  };
+
   const onClickLeftBtn = () => {
     onSliderAnimation();
     setTimeout(() => {
@@ -58,40 +113,23 @@ export const Slider = (): ReactElement => {
     }, 500);
   }
 
-  const onClickRightBtn = () => {
-    onSliderAnimation();
-    setTimeout(() => {
-      setSlideState((prev) => {
-        if (prev.id === 6) {
-          return slideInfo.filter((i) => i.id === 1)[0];
-        } else {
-          return slideInfo.filter((i) => i.id === prev.id + 1)[0];
-        }
-      });
-    }, 500);
-  };
-
-  const points = slideInfo.map((item, index) => {
-    const angle = (index / numPoints) * 2 * Math.PI;
-    const x = centerX + radius * Math.cos(angle);
-    const y = centerY + radius * Math.sin(angle);
-
-    return (
-      <div
-        key={item.id}
-        className="point"
-        style={{ left: `${x}px`, top: `${y}px` }}
-        id={String(item.id)}
-        onClick={() => onPointClick(item.id)}
-      ></div>
-    );
-  });
-
   return (
     <div className='main-content'>
       <div className='circle-container'>
         <div className="circle">
-          {points}
+          <div className='point-container'>
+            {pointsPosition.map((item: { x: number, y: number, id: number }) => {
+              return (
+                <div
+                  key={item.id}
+                  className="point"
+                  style={{ left: `${item.x}px`, top: `${item.y}px` }}
+                  id={String(item.id)}
+                  onClick={() => onPointClick(item.id)}
+                ></div>
+              );
+            })}
+          </div>
           <div
             className="circle-date-container"
           >
@@ -115,7 +153,12 @@ export const Slider = (): ReactElement => {
         </div>
       </div>
 
-      <div className={sliderAnimation ? 'slider-container fade-in' : 'slider-container fade-out'}>
+      <div
+        className={
+          sliderAnimation ? 'slider-container slider-container-fade-in'
+            : 'slider-container slider-container-fade-out'
+        }
+      >
         <Swiper
           modules={[Navigation]}
           spaceBetween={50}
