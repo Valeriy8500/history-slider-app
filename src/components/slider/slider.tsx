@@ -61,7 +61,7 @@ export const Slider = (): ReactElement => {
     }, 500);
   };
 
-  const onClickRightBtn = () => {
+  const changePositionOnRightBtn = () => {
     let arr: Object[] = [];
 
     const updatedSlideInfo = slideInfoArr.map((item, index) => {
@@ -87,8 +87,40 @@ export const Slider = (): ReactElement => {
     });
 
     setPointsPosition(arr);
+  };
 
+  const changePositionOnLeftBtn = () => {
+    let arr: Object[] = [];
+
+    const updatedSlideInfo = slideInfoArr.map((item, index) => {
+      if (index === 5) {
+        return { ...item, numForCircle: slideInfo[0].numForCircle };
+      } else {
+        return { ...item, numForCircle: slideInfo[index + 1].numForCircle };
+      }
+    });
+
+    const lastEl = updatedSlideInfo[updatedSlideInfo.length - 1];
+    updatedSlideInfo.unshift(lastEl);
+    updatedSlideInfo.pop();
+
+    setSlideInfoArr(updatedSlideInfo);
+
+    updatedSlideInfo.forEach((item) => {
+      const angle = (item.numForCircle / numPoints) * 2 * Math.PI;
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+
+      arr = [...arr, { x, y, id: item.id }];
+    });
+
+    setPointsPosition(arr);
+  };
+
+  const onClickRightBtn = () => {
+    changePositionOnRightBtn();
     onSliderAnimation();
+
     setTimeout(() => {
       setSlideState((prev) => {
         if (prev.id === 6) {
@@ -101,7 +133,9 @@ export const Slider = (): ReactElement => {
   };
 
   const onClickLeftBtn = () => {
+    changePositionOnLeftBtn();
     onSliderAnimation();
+
     setTimeout(() => {
       setSlideState((prev) => {
         if (prev.id === 1) {
