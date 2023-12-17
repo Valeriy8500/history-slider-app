@@ -1,4 +1,6 @@
-export const slideInfo = [
+import { ISlideState } from "../interfaces/interfaces";
+
+export const slideInfo: ISlideState[] = [
   {
     id: 1,
     name: 'Литература',
@@ -167,7 +169,7 @@ export const slideInfo = [
   },
 ];
 
-export const numPoints = 6;
-export const radius = 265;
-export const centerX = 262;
-export const centerY = 262;
+export const numPoints: number = 6;
+export const radius: number = 265;
+export const centerX: number = 262;
+export const centerY: number = 262;

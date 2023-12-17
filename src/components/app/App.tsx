@@ -1,8 +1,9 @@
 import { HistoryBlock } from '../history-block/history-block';
+import { ReactElement } from 'react';
 import 'swiper/css';
 import './App.scss';
 
-function App() {
+const App = (): ReactElement => {
   return (<HistoryBlock />);
 }
 
