@@ -24,7 +24,7 @@ export const Slider = (): ReactElement => {
       const x = centerX + radius * Math.cos(angle);
       const y = centerY + radius * Math.sin(angle);
 
-      arr = [...arr, { x, y, id: item.id }];
+      arr = [...arr, { x, y, id: item.id, name: item.name }];
     });
 
     setPointsPosition(arr);
@@ -59,6 +59,33 @@ export const Slider = (): ReactElement => {
     setTimeout(() => {
       setSlideState(newSlide);
     }, 500);
+
+    changePositionOnRandomPoint(id);
+  };
+
+  const changePositionOnRandomPoint = (id: number) => {
+    let arr: Object[] = [];
+
+    const copySlideInfoArr = [...slideInfoArr];
+    const idx = slideInfoArr.indexOf(slideInfoArr.filter((item) => item.id === id)[0]);
+    const spliceArr1 = copySlideInfoArr.splice(idx);
+    const spliceArr2 = copySlideInfoArr.splice(0, idx);
+    const newArr = [...spliceArr1, ...spliceArr2];
+    const updatedSlideInfo = newArr.map((item, idx) => {
+      return { ...item, numForCircle: idx + 5 };
+    });
+
+    setSlideInfoArr(updatedSlideInfo);
+
+    updatedSlideInfo.forEach((item) => {
+      const angle = (item.numForCircle / numPoints) * 2 * Math.PI;
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+
+      arr = [...arr, { x, y, id: item.id, name: item.name }];
+    });
+
+    setPointsPosition(arr);
   };
 
   const changePositionOnRightBtn = () => {
@@ -83,7 +110,7 @@ export const Slider = (): ReactElement => {
       const x = centerX + radius * Math.cos(angle);
       const y = centerY + radius * Math.sin(angle);
 
-      arr = [...arr, { x, y, id: item.id }];
+      arr = [...arr, { x, y, id: item.id, name: item.name }];
     });
 
     setPointsPosition(arr);
@@ -111,7 +138,7 @@ export const Slider = (): ReactElement => {
       const x = centerX + radius * Math.cos(angle);
       const y = centerY + radius * Math.sin(angle);
 
-      arr = [...arr, { x, y, id: item.id }];
+      arr = [...arr, { x, y, id: item.id, name: item.name }];
     });
 
     setPointsPosition(arr);
@@ -147,12 +174,13 @@ export const Slider = (): ReactElement => {
     }, 500);
   }
 
+  console.log('pointsPosition: ', pointsPosition);
   return (
     <div className='main-content'>
       <div className='circle-container'>
         <div className="circle">
           <div className='point-container'>
-            {pointsPosition.map((item: { x: number, y: number, id: number }) => {
+            {pointsPosition.map((item: { x: number, y: number, id: number, name: string }, idx: number) => {
               return (
                 <div
                   key={item.id}
@@ -160,7 +188,9 @@ export const Slider = (): ReactElement => {
                   style={{ left: `${item.x}px`, top: `${item.y}px` }}
                   id={String(item.id)}
                   onClick={() => onPointClick(item.id)}
-                ></div>
+                >
+                  <div className="point-name">{idx === 0 ? item.name : null}</div>
+                </div>
               );
             })}
           </div>

@@ -74,7 +74,22 @@
   border-radius: 50%;
   position: absolute;
   z-index: 999;
-  transition: transform 0.5s ease, background-color 0.5s ease;
+  transition: transform 0.5s ease;
+  color: rgba(66, 86, 122, 1);
+}
+
+.point:nth-child(1) {
+  background-color: rgba(244, 245, 249, 1) !important;
+}
+
+.point-name {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  color: rgba(66, 86, 122, 1);
+  position: absolute;
+  top: -250%;
+  left: 600%;
 }
 
 .point::before {
@@ -98,8 +113,6 @@
 .point:hover {
   cursor: pointer;
   transform: scale(1.5);
-  background-color: white;
-  color: black;
 }
 
 .point:hover::before {
@@ -110,6 +123,9 @@
   opacity: 1;
   width: 45px;
   height: 45px;
+  font-size: 24px;
+  font-weight: 500;
+  color: rgba(66, 86, 122, 1);
 }
 
 .point:nth-child(1):hover {
