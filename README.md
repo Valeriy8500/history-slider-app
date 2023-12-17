@@ -1,14 +1,11 @@
 # history-slider-app
 
-**Для начала работы вам необходимо установить:**
-1. Node.js https://nodejs.org/en/download/
-2. Git Bash https://gitforwindows.org/ если вы используете Windows OS.
+**Установка:**
 
-**Клонирование проекта и другие команды:**
-
-1. git clone https://github.com/Valeriy8500/history-slider-app.git
-2. npm install (устанавливает зависимости)
-3. npm start (запускает проект)
+1. Клонируйте репозиторий: git clone https://github.com/Valeriy8500/history-slider-app.git
+2. Перейдите в каталог проекта: cd history-slider-app
+3. Установите зависимости: npm install
+3. Запустите проект: npm start
 
 **Используемые технологии:**
 1. HTML5
