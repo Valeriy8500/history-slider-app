@@ -15,6 +15,12 @@
     padding-left: 5px;
   }
 
+  @media (max-width: 320px) {
+    .slide-number {
+      margin-bottom: 5px;
+    }
+  }
+
   .buttons {
 
     .btn-left,
@@ -24,6 +30,16 @@
       margin-right: 10px;
     }
 
+    @media (max-width: 320px) {
+      .btn-left {
+        margin-right: 5px;
+      }
+
+      .btn-right {
+        margin-right: 0;
+      }
+    }
+
     .btn-icon {
       width: 50px;
       height: 50px;
@@ -31,10 +47,26 @@
       border-radius: 50%;
     }
 
+    @media (max-width: 320px) {
+      .btn-icon {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
     .btn-icon:hover {
       cursor: pointer;
       background-color: white;
       transition: background-color 0.3s ease-in-out;
     }
+  }
+}
+
+@media (max-width: 320px) {
+  .switches-container {
+    position: static;
+    order: 2;
+    width: 60px;
+    margin-top: auto;
   }
 }

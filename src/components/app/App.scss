@@ -10,3 +10,9 @@ body {
   padding-right: calc(17% / 2);
   background-color: rgba(244, 245, 249, 1);
 }
+
+@media (max-width: 320px) {
+  body {
+    padding: 0;
+  }
+}

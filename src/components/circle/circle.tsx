@@ -47,9 +47,7 @@ export const Circle = (props: ICircleProps): ReactElement => {
             );
           })}
         </div>
-        <div
-          className="circle-date-container"
-        >
+        <div className="circle-date-container">
           <span>{currStartDate}</span>
           <span>{currEndDate}</span>
         </div>

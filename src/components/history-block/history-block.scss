@@ -14,3 +14,9 @@
     width: 100%;
   }
 }
+
+@media (max-width: 320px) {
+  .history-block {
+    border: none;
+  }
+}
